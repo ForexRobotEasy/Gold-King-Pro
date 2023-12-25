@@ -1,0 +1,141 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                                Gold King Pro.mq5 |
+//|                      Copyright 2022, Forex Robot Easy Team        |
+//|                                   https://www.forexroboteasy.com |
+//+------------------------------------------------------------------+
+#property copyright 'Copyright 2022, Forex Robot Easy Team'
+#property link      'https://www.forexroboteasy.com'
+
+//+------------------------------------------------------------------+
+//|                            VirtualStopLossModule                  |
+//+------------------------------------------------------------------+
+class VirtualStopLossModule
+{
+private:
+   double virtualStopLossLevel;
+   double currentPrice;
+
+public:
+   VirtualStopLossModule()
+   {
+      virtualStopLossLevel = 0;
+      currentPrice = 0;
+   }
+
+   void SetVirtualStopLossLevel(double level)
+   {
+      virtualStopLossLevel = level;
+   }
+
+   double GetVirtualStopLossLevel()
+   {
+      return virtualStopLossLevel;
+   }
+
+   void SetCurrentPrice(double price)
+   {
+      currentPrice = price;
+   }
+
+   double GetCurrentPrice()
+   {
+      return currentPrice;
+   }
+
+   bool IsStopLossHit()
+   {
+      if (currentPrice <= virtualStopLossLevel)
+         return true;
+      else
+         return false;
+   }
+};
+
+//+------------------------------------------------------------------+
+//|                            Gold King Pro                           |
+//+------------------------------------------------------------------+
+class GoldKingPro
+{
+private:
+   VirtualStopLossModule virtualStopLossModule;
+
+public:
+   GoldKingPro()
+   {
+      // Initialize virtual stop loss module
+   }
+
+   void SetVirtualStopLoss(double level)
+   {
+      virtualStopLossModule.SetVirtualStopLossLevel(level);
+   }
+
+   double GetVirtualStopLoss()
+   {
+      return virtualStopLossModule.GetVirtualStopLossLevel();
+   }
+
+   void SetCurrentPrice(double price)
+   {
+      virtualStopLossModule.SetCurrentPrice(price);
+   }
+
+   double GetCurrentPrice()
+   {
+      return virtualStopLossModule.GetCurrentPrice();
+   }
+
+   void Start()
+   {
+      // Start trading
+   }
+
+   void Stop()
+   {
+      // Stop trading
+   }
+
+   bool IsStopLossHit()
+   {
+      return virtualStopLossModule.IsStopLossHit();
+   }
+};
+
+//+------------------------------------------------------------------+
+//|                            OnInit                                |
+//+------------------------------------------------------------------+
+void OnInit()
+{
+   // Initialize Gold King Pro
+   GoldKingPro goldKingPro;
+   goldKingPro.SetVirtualStopLoss(1500.0); // Set virtual stop loss level
+   goldKingPro.SetCurrentPrice(1450.0);    // Set current price
+
+   if (goldKingPro.IsStopLossHit())
+   {
+      Print('Stop loss hit!');
+      goldKingPro.Stop(); // Stop trading
+   }
+   else
+   {
+      Print('Continue trading!');
+      goldKingPro.Start(); // Start trading
+   }
+}
+
+//+------------------------------------------------------------------+
+//|                            OnDeinit                              |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+   // Deinitialize
+}
+
+//+------------------------------------------------------------------+
+//|                            OnTick                                |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+   // Perform necessary operations on each tick
+}
